@@ -1,0 +1,391 @@
+
+
+##em1
+DEVICE=em1
+TYPE=Ethernet
+UUID=576b4488-6bbd-47f5-b994-8a6ae30eb10f
+#UUID=714c7302-5f08-4f3d-9b4d-3c887d7af688
+ONBOOT=yes
+NM_CONTROLLED=no
+BOOTPROTO=static
+IPADDR=192.168.91.10
+GATEWAY=192.168.91.252
+DNS1=8.8.8.8
+PREFIX=24
+DEFROUTE=no
+PEERDNS=no
+IPV4_FAILURE_FATAL=yes
+IPV6INIT=no
+NAME=em1
+USERCTL=no
+
+##em2 wwan
+
+DEVICE=em2
+TYPE=Ethernet
+UUID=b9d9853d-f557-456f-86e5-b721e0310341
+ONBOOT=yes
+NM_CONTROLLED=no
+MACADDR=BC:97:E1:49:AB:5D
+BOOTPROTO=static
+IPADDR=172.16.137.250
+PREFIX=24
+DEFROUTE=no
+PEERDNS=no
+IPV4_FAILURE_FATAL=yes
+IPV6INIT=no
+NAME=em2
+USERCTL=no
+
+##em3 wlan
+DEVICE=em3
+TYPE=Ethernet
+UUID=1e35ff50-c477-4f45-bba3-7277b5880113
+ONBOOT=yes
+NM_CONTROLLED=no
+BOOTPROTO=static
+MACADDR=bc:97:e1:49:ab:5a
+IPADDR=182.16.137.250
+GATEWAY=182.16.137.252
+PREFIX=24
+DEFROUTE=no
+PEERDNS=no
+IPV4_FAILURE_FATAL=yes
+IPV6INIT=no
+NAME=em3
+USERCTL=no
+
+##em4
+DEVICE=em4
+TYPE=Ethernet
+UUID=1ee12824-c575-43cc-9442-cd51c479fc4f
+ONBOOT=yes
+NM_CONTROLLED=no
+BOOTPROTO=static
+IPADDR=x.x.x.x.x
+GATEWAY=x.x.x.x
+DNS1=8.8.8.8
+PREFIX=24
+DEFROUTE=no
+PEERDNS=no
+IPV4_FAILURE_FATAL=yes
+IPV6INIT=no
+NAME=em4
+USERCTL=no
+
+##
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=static
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=p2p1
+UUID=7615a434-a487-47a0-b6ab-3a9b6fb8a18a
+DEVICE=p2p1
+ONBOOT=yes
+IPADDR=x.x.12.x
+PREFIX=24
+
+##
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=static
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=p2p2
+UUID=19d3ee80-e4dc-4dff-959a-fad6ef4cdadb
+DEVICE=p2p2
+ONBOOT=yes
+IPADDR=x.x.137.x
+PREFIX=24
+
+1(a)////Interface (enp1s0)////
+
+	TYPE=Ethernet
+	BOOTPROTO=static
+	DEFROUTE=yes
+	IPV4_FAILURE_FATAL=yes
+	NAME=enp1s0
+	UUID=f5851e96-71f1-42bc-a807-ec687c3bb378
+	DEVICE=enp1s0
+	ONBOOT=yes
+	IPADDR=X.X.X.X
+	NETMASK=255.255.255.0
+	GATEWAY=X.X.X.X
+	DNS=8.8.8.8
+	PROXY_METHOD=none
+	BROWSER_ONLY=no
+	PREFIX=24
+	IPV6INIT=no
+
+
+1(b)	///////////enp3s0(otherwise connection room switch configure)//////////
+
+	DEVICE=enp3s0
+	TYPE=Ethernet
+	PROXY_METHOD=none
+	BROWSER_ONLY=no
+	BOOTPROTO=none
+	DEFROUTE=yes
+	IPV4_FAILURE_FATAL=no
+	UUID=0a65a2f0-60fe-4823-bbbd-09e84eb027f1
+	NM_CONTROLLED=no
+	NAME=enp3s0
+	ONBOOT=yes
+	IPADDR=x.x.x.x
+	PREFIX=24
+
+1(c)	///////////DMZ/////////////
+	TYPE=Ethernet
+	PROXY_METHOD=none
+	BROWSER_ONLY=no
+	BOOTPROTO=static
+	DEFROUTE=yes
+	IPV4_FAILURE_FATAL=no
+	IPV6INIT=yes
+	IPV6_AUTOCONF=yes
+	IPV6_DEFROUTE=yes
+	IPV6_FAILURE_FATAL=no
+	IPV6_ADDR_GEN_MODE=stable-privacy
+	NAME=p2p1
+	UUID=7615a434-a487-47a0-b6ab-3a9b6fb8a18a
+	DEVICE=p2p1
+	ONBOOT=yes
+	IPADDR=x.x.x.x
+	PREFIX=24
+
+1(d)	//////////FW WAN///////
+	DEVICE=em2
+	TYPE=Ethernet
+	UUID=b9d9853d-f557-456f-86e5-b721e0310341
+	ONBOOT=yes
+	NM_CONTROLLED=no
+	MACADDR=BC:97:E1:49:AB:5D
+	BOOTPROTO=static
+	IPADDR=x.x.x.x
+	PREFIX=24
+	DEFROUTE=no
+	PEERDNS=no
+	IPV4_FAILURE_FATAL=yes
+	IPV6INIT=no
+	NAME=em2
+	USERCTL=no
+
+1(e)	//////////FW LAN////
+	DEVICE=em3
+	TYPE=Ethernet
+	UUID=1e35ff50-c477-4f45-bba3-7277b5880113
+	ONBOOT=yes
+	NM_CONTROLLED=no
+	BOOTPROTO=static
+	MACADDR=bc:97:e1:49:ab:5a
+	IPADDR=x.x.x.x
+	GATEWAY=x.x.x.x
+	PREFIX=24
+	DEFROUTE=no
+	PEERDNS=no
+	IPV4_FAILURE_FATAL=yes
+	IPV6INIT=no
+	NAME=em3
+	USERCTL=no
+
+	///////////////////////////////
+2	dnsmasq
+	///////////////////////////////
+	
+	yum install dnsmasq
+	ofter changes dnsmasq.conf
+
+	vi Dnsmasq.conf
+
+	user=nobody
+	port=53
+	bogus-priv
+	#no-resolv
+	#domain-needed
+	cache-size=0
+	#strict-order
+	log-queries
+	interface=eno1
+	interface=eno2
+	interface=lo
+	server=8.8.8.8
+
+	systemctl status dnsmasq.service
+	systemctl start dnsmasq.service
+	
+	//////////////////
+3 (a)	pptpd	
+	//////////////////
+	
+	yum install pptpd(changes pptpd.conf)
+	vi /etc/pptpd.conf(add entry below  two lines) 
+
+	localip 172.16.127.1-50
+	remoteip 172.16.127.51-100
+	
+	///////////
+3(b)	chap-secrects
+	///////////
+	
+	cd /etc/ppp/
+	cat chap-secrects
+	vi chap-secrects(add names and password)
+
+
+	trail-secure pptpd qwer@1234 172.16.127.51
+
+
+	systemctl status pptpd.service
+	systemctl start pptpd.service
+
+	////////////
+4	shorewall
+	///////////	
+	
+	yum install shorewall
+	changes below entries
+	
+	/////////////	
+4(a)	vi hosts
+	/////////////
+	add this type of entries
+
+	sec     ppp+:172.16.127.0/24
+
+
+	////////////
+4(b)	vi zones
+	//////////
+	fw              firewall
+	ext             ipv4
+	sec             ipv4
+	tun             ipv4
+	int             ipv4
+
+
+	/////////////////
+4(c)	vi Providers
+	////////////////
+	
+	MTNL	   4       4      -     	eno1          X.X.X.X		balance=9
+
+	//////////////
+4(d)	vi Policy
+	////////////
+	sec             ext             DROP
+	fw              ext             ACCEPT
+	int             fw              ACCEPT
+	sec             tun             ACCEPT
+	all             all             REJECT info
+
+	/////////////////////
+4(e)	vi interfaces
+	////////////////////
+	ext             enp1s0  -
+	int             enp3s0  -
+	tun             tun0    -
+	-               ppp+
+	////////////
+4(f)	snat
+	////////////
+	vi snat
+	MASQUERADE              172.16.127.0/24         tun0
+	//////////////
+4(g)	shorewall.conf
+	///////////////
+	vi shorewall.conf( changes yes)
+	STARTUP_ENABLED=yes
+
+	////////////////////////////
+4(i)	rules
+	////////////////////////////
+
+	ACCEPT  all                     all
+	ACCEPT  $FW                     ext                                                                                     udp     53
+	ACCEPT  $FW                     ext                                                                                     tcp,udp 80,443
+	ACCEPT  all                     all                                                                                     icmp
+	ACCEPT  $FW                     all                                                                                     tcp,udp 443,80,22
+	ACCEPT  all                     all                                                                                     icmp,gre
+	ACCEPT  all                     fw                                                                                      gre
+	ACCEPT  fw                      ext:level1 ip                                                                           tcp,udp (port add)
+	ACCEPT  sec,fw                  tun                                                                                     tcp     80,443
+	DROP    any                     any
+	                                                                                                                                  
+
+	systemctl status shorewall.service
+	systemctl start shorewall.service
+
+	///////////
+5	openvpn
+	///////////
+
+	yum install openvpn
+	ofter the key Gen setup procedure 
+
+	/////////////////key gen setup////////////
+
+	sudo yum update -y
+	sudo yum install epel-release -y
+	sudo yum install -y openvpn wget
+	wget -O /tmp/easyrsa https://github.com/OpenVPN/easy-rsa-old/archive/2.3.3.tar.gz
+	tar xfz /tmp/easyrsa
+	sudo mkdir /etc/openvpn/easy-rsa
+	sudo cp -rf easy-rsa-old-2.3.3/easy-rsa/2.0/* /etc/openvpn/easy-rsa
+
+	sudo mkdir /etc/openvpn/easy-rsa/keys
+
+	sudo nano /etc/openvpn/easy-rsa/vars
+
+	cd /etc/openvpn/easy-rsa
+	source ./vars
+
+	./clean-all
+
+	./build-ca
+
+	./build-key-server server
+
+	./build-dh
+
+	cd /etc/openvpn/easy-rsa/keys
+	sudo cp dh2048.pem ca.crt server.crt server.key /etc/openvpn
+
+	cd /etc/openvpn/easy-rsa
+	./build-key client
+
+	cp /etc/openvpn/easy-rsa/openssl-1.0.0.cnf /etc/openvpn/easy-rsa/openssl.cnf
+
+
+
+
+=================================
+
+
+/bin/echo '206 tunzero' >>/etc/iproute2/rt_tables
+/sbin/ip rule add from 172.16.137.0/24 table tunzero
+/sbin/ip route add default via 10.121.150.97 table tunzero
+
+
+
+
+####route add cmd for traffic via tunnel
+iptables -t nat -A POSTROUTING -o nordlynx -j MASQUERADE
+echo '1 tunroute' >> /etc/iproute2/rt_tables
+ip rule add from 10.216.242.11/24 table tunroute
+ip route add default via 10.5.0.2 dev nordlynx table tunroute
+
+
+

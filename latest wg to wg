@@ -1,0 +1,118 @@
+cat pmt.conf
+[Interface]
+Address = 10.20.0.9/24
+PrivateKey = ANrw9cFc9RL4Ga0z+7X4d3eU6LMOXBhkzZNu1GMPv0k=
+ListenPort = 51820
+
+
+PreUp = sysctl -w net.ipv4.ip_forward=1
+
+
+[Peer]
+PublicKey = AyjBJF184D+fej8htAgzUfXtu7i8VnQ+W6awmilD2xg=
+AllowedIPs = 10.20.0.103/32
+
+[Peer]
+PublicKey = biiY5S/ki/wZqheMNuiFAUhBfWkBDeffa+O78iInmFI=
+AllowedIPs = 10.20.0.101/32
+
+
+[Peer]
+PublicKey = Ydv44HERdBzPQ2HW2KEgu+dzCkMGa0N2p3vy4Q584is=
+AllowedIPs = 10.20.0.102/32
+
+
+[Peer]
+PublicKey = y+U1bHi+J/ModsucnjvBMOgjpIKl30/RrzoM4E5u83s=
+AllowedIPs = 10.20.0.100/32
+=============================
+vi tun0.conf
+[Interface]
+Address = 172.16.0.1/24
+PrivateKey = +KQ3u5+z81g3PWXwnEXjfWDr9ygqRSr+PM1Ma8IIREk=
+ListenPort = 443
+#Table = 123
+PreUp = sysctl -w net.ipv4.ip_forward=1
+#PreUp = ip rule add iif tun0 table 123 priority 456
+#PostDown = ip rule del iif tun0 table 123 priority 456
+#[Peer]
+#PublicKey = gnlEnsybEtoKZ8TD0YjDvBkWu0gEWtUwBlTK8fqw/y4=
+#AllowedIPs = 172.16.0.1/32
+[Peer]
+PublicKey = SitKRjo9QH/CtQrFGdUjHoCBxStH0Vr2TY14qGUFyB0=
+AllowedIPs = 0.0.0.0/0
+Endpoint = 188.208.141.216:443
+PersistentKeepalive = 25
+=========================================
+Level one 
+[Interface]
+Address = 172.16.0.2/24
+PrivateKey = qL5mxLS1DZsfkkiymOeFENplgp0JJzzLj+jnYfrndX4=
+ListenPort = 443
+Table = 123
+PreUp = sysctl -w net.ipv4.ip_forward=1
+PreUp = ip rule add iif wg0 table 123 priority 456
+PostDown = ip rule del iif wg0 table 123 priority 456
+[Peer]
+PublicKey = v8ryLvSyMJY3G4pou9EJh1SKB80nzaLTTO9q7xc733I=
+AllowedIPs = 172.16.0.1/32
+[Peer]
+PublicKey = gnlEnsybEtoKZ8TD0YjDvBkWu0gEWtUwBlTK8fqw/y4=
+AllowedIPs = 0.0.0.0/0
+Endpoint = 142.44.236.209:443
+PersistentKeepalive = 25
+
+
+=================================
+[Interface]
+Address = 172.16.0.3/24
+PrivateKey = MP8nL8KnMgnAToeM0sVONEGVEsKM3n48PBOFEDGa+Vo=
+ListenPort = 443
+PreUp = sysctl -w net.ipv4.ip_forward=1
+#PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+#PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+[Peer]
+PublicKey = SitKRjo9QH/CtQrFGdUjHoCBxStH0Vr2TY14qGUFyB0=
+AllowedIPs = 172.16.0.2/32
+
+==================================================
+vi nc.sh
+# Bring up WireGuard interface
+echo -e "${YELLOW}Bringing up WireGuard interface...${NC}"
+wg-quick up wg0
+
+# Fetch the list of countries from the nordvpn command
+countries=($(nordvpn countries | awk '{$1=$2=""; print $0}' | xargs))
+
+# Display the countries with numbers
+echo "Select a country to connect:"
+for i in "${!countries[@]}"; do
+  echo "$((i + 1)). ${countries[i]}"
+done
+
+# Prompt user for selection
+read -p "Enter the number of the country: " selection
+
+# Validate the selection
+if [[ $selection -ge 1 && $selection -le ${#countries[@]} ]]; then
+  country="${countries[$((selection - 1))]}"
+  echo "Connecting to $country..."
+  nordvpn connect "$country"
+else
+  echo "Invalid selection. Please enter a number between 1 and ${#countries[@]}."
+fi
+
+# Connect to NordVPN
+echo -e "${YELLOW}Connecting to NordVPN in country: ${country}...${NC}"
+nordvpn connect "${country}"
+
+# Add IP rule
+echo -e "${YELLOW}Adding IP rule...${NC}"
+ip rule add from 172.16.0.0/24 table tunroute
+nordlynx_ip=$(ifconfig nordlynx | grep 'inet ' | awk '{print $2}')
+
+# Add route
+echo -e "${YELLOW}Adding route ${nordlynx_ip} ...${NC}"
+ip route add default via ${nordlynx_ip} dev nordlynx table tunroute
+
+echo -e "${GREEN}VPN setup complete. You are connected to $1 ${NC}"
