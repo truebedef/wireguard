@@ -1,0 +1,9 @@
+wget --quiet -o - https://repo.linuxbase.com/linuxbabe-pubkey.asc | sudo tee /etc/apt/trusted.gpg.d/linuxbabe.pubkey.asc
+echo "deb[signed-by=/etc/apt/trusted.gpg.d/linuxbabe-pubkey.asc arch=$( dpkg --print-architecture )] https://repo.linuxbabe.com $(lsb_release -cs) main" \ sudo tee /etc/apt/sources.list.d/linuxbabe.list
+echo "deb[signed-by=/etc/apt/trusted.gpg.d/linuxbabe-pubkey.asc arch=$( dpkg --print-architecture )] https://repo.linuxbabe.com jammy main" \ sudo tee /etc/apt/sources.list.d/linuxbabe.list
+sudo apt update
+sudo apt install systemback
+xhost +local:
+sudo su -
+export DISPLAY=:O.O
+systemback
