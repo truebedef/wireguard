@@ -33,7 +33,7 @@ countries=(
   "Vietnam"
 )
 
-# Function to display country options
+# Function to display country options with place values (numbers)
 display_countries() {
   echo "Select a country by number (each country is listed vertically):"
   for i in "${!countries[@]}"; do
@@ -47,22 +47,24 @@ display_countries
 echo
 read -p "Enter the number of the country you want to connect to: " selected_number
 
-# Validate selection
+# Validate selection and handle connection
 if [[ "$selected_number" -ge 1 && "$selected_number" -le "${#countries[@]}" ]]; then
   selected_country="${countries[$((selected_number-1))]}"
-  echo "Connecting to $selected_country..."
+  echo "Attempting to connect to $selected_country..."
 
-  # Here, you would add the code to actually connect to the VPN server.
-  # For this example, we will just simulate success.
-  
-  # Example: Check if the server exists (this is a placeholder, adjust for your environment)
-  # If the server exists, show "Connected", otherwise show "Server does not exist"
-  if [[ "$selected_country" == "Moldova" || "$selected_country" == "Monaco" || "$selected_country" == "Mongolia" || "$selected_country" == "Montenegro" ]]; then
-    echo "The specified server does not exist."
-  else
+  # Try to connect to the selected country using NordVPN
+  # Ensure NordVPN is connected and specify the country as per selection
+  nordvpn connect "$selected_country"
+
+  # Check if NordVPN is connected
+  vpn_status=$(nordvpn status | grep "Status" | awk '{print $2}')
+
+  if [[ "$vpn_status" == "Connected" ]]; then
     echo "Successfully connected to $selected_country!"
+  else
+    echo "Failed to connect to $selected_country. Please check your configuration."
   fi
 else
-  echo "Invalid selection. Please try again."
+  echo "Invalid selection. Please enter a valid number from the list."
 fi
 
