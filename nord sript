@@ -1,0 +1,68 @@
+#!/bin/bash
+
+# List of countries (adjusted to match the row setup)
+countries=(
+  "Albania" "Algeria" "Andorra" "Angola"
+  "Argentina" "Armenia" "Australia" "Austria"
+  "Azerbaijan" "Bahamas" "Bangladesh" "Belgium"
+  "Belize" "Bermuda" "Bhutan" "Bolivia"
+  "Bosnia_And_Herzegovina" "Brazil" "Brunei_Darussalam" "Bulgaria"
+  "Cambodia" "Canada" "Cayman_Islands" "Chile"
+  "Colombia" "Costa_Rica" "Croatia" "Cyprus"
+  "Czech_Republic" "Denmark" "Dominican_Republic" "Ecuador"
+  "Egypt" "El_Salvador" "Estonia" "Finland"
+  "France" "Georgia" "Germany" "Ghana"
+  "Greece" "Greenland" "Guam" "Guatemala"
+  "Honduras" "Hong_Kong" "Hungary" "Iceland"
+  "India" "Indonesia" "Ireland" "Isle_Of_Man"
+  "Israel" "Italy" "Jamaica" "Japan"
+  "Jersey" "Kazakhstan" "Kenya" "Lao_Peoples_Democratic_Republic"
+  "Latvia" "Lebanon" "Liechtenstein" "Lithuania"
+  "Luxembourg" "Malaysia" "Malta" "Mexico"
+  "Moldova" "Monaco" "Mongolia" "Montenegro"
+  "Morocco" "Mozambique" "Myanmar" "Nepal"
+  "Netherlands" "New_Zealand" "Nigeria" "North_Macedonia"
+  "Norway" "Pakistan" "Panama" "Papua_New_Guinea"
+  "Paraguay" "Peru" "Philippines" "Poland"
+  "Portugal" "Puerto_Rico" "Romania" "Serbia"
+  "Singapore" "Slovakia" "Slovenia" "South_Africa"
+  "South_Korea" "Spain" "Sri_Lanka" "Sweden"
+  "Switzerland" "Taiwan" "Thailand" "Trinidad_And_Tobago"
+  "Turkey" "Ukraine" "United_Arab_Emirates" "United_Kingdom"
+  "United_States" "Uruguay" "Uzbekistan" "Venezuela"
+  "Vietnam"
+)
+
+# Function to display country options
+display_countries() {
+  echo "Select a country by number (each country is listed vertically):"
+  for i in "${!countries[@]}"; do
+    # Output each country with its number (index+1 for user-friendly numbering)
+    echo "$((i+1))    ${countries[i]}"
+  done
+}
+
+# Prompt user for selection
+display_countries
+echo
+read -p "Enter the number of the country you want to connect to: " selected_number
+
+# Validate selection
+if [[ "$selected_number" -ge 1 && "$selected_number" -le "${#countries[@]}" ]]; then
+  selected_country="${countries[$((selected_number-1))]}"
+  echo "Connecting to $selected_country..."
+
+  # Here, you would add the code to actually connect to the VPN server.
+  # For this example, we will just simulate success.
+  
+  # Example: Check if the server exists (this is a placeholder, adjust for your environment)
+  # If the server exists, show "Connected", otherwise show "Server does not exist"
+  if [[ "$selected_country" == "Moldova" || "$selected_country" == "Monaco" || "$selected_country" == "Mongolia" || "$selected_country" == "Montenegro" ]]; then
+    echo "The specified server does not exist."
+  else
+    echo "Successfully connected to $selected_country!"
+  fi
+else
+  echo "Invalid selection. Please try again."
+fi
+
