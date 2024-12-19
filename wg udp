@@ -1,3 +1,10 @@
+sudo nmcli connection modify eno4 ipv4.method manual ipv4.addresses 192.168.1.100/24
+sudo nmcli connection modify eno4 ipv4.gateway 192.168.1.1
+sudo nmcli connection modify eno4 ipv4.dns "8.8.8.8 8.8.4.4"
+sudo nmcli connection down eno4
+sudo nmcli connection up eno4
+
+
 sudo firewall-cmd --zone=public --add-port=51830/udp --permanent
 
 sudo firewall-cmd --zone=public --add-port=8080/tcp --permanent
