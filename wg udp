@@ -1,0 +1,9 @@
+sudo firewall-cmd --zone=public --add-port=51830/udp --permanent
+
+sudo firewall-cmd --zone=public --add-port=8080/tcp --permanent
+
+sudo firewall-cmd --zone=public --add-masquerade --permanent
+
+
+sudo firewall-cmd --reload
+
