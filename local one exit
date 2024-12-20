@@ -1,0 +1,49 @@
+gw.conf(exit.conf)
+[Interface]
+Address = 172.16.0.3/24
+PrivateKey = 2IIKEE6EkhnPi0WswipOkDxVKOUjV4LLUWUhX37/31k=
+ListenPort = 443
+PreUp = sysctl -w net.ipv4.ip_forward=1
+PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+[Peer]
+PublicKey = PJOtU8HMLrexgr3SHUMCNKW1poNhKS1NzsMGrH8WJHQ=
+AllowedIPs = 172.16.0.2/32
+
+
+
+hopeone.conf(local.conf)
+
+[Interface]
+Address = 172.16.0.1/24
+PrivateKey = YH38flBod7xWfJm4mpqIIsjPx2JINHhJMnZbwyweTHE=
+ListenPort = 443
+Table = 123
+PreUp = sysctl -w net.ipv4.ip_forward=1
+PreUp = ip rule add iif wg0 table 123 priority 456
+PostDown = ip rule del iif wg0 table 123 priority 456
+[Peer]
+PublicKey = q56Qp0mG9F4eTwn1DT5hZ4XULG/6DzweseEKql7tvCc=
+AllowedIPs = 172.16.0.1/32
+[Peer]
+PublicKey = PJOtU8HMLrexgr3SHUMCNKW1poNhKS1NzsMGrH8WJHQ=
+AllowedIPs = 0.0.0.0/0
+Endpoint = <next-hop-ip>:443
+PersistentKeepalive = 25
+=====================(levelone.conf)
+[Interface]
+Address = 172.16.0.2/24
+PrivateKey = AM1DsPl4tBpcP61y1Lalr4aV5gKmLyoHC/Zzdvtclno=
+ListenPort = 443
+Table = 123
+PreUp = sysctl -w net.ipv4.ip_forward=1
+PreUp = ip rule add iif wg0 table 123 priority 456
+PostDown = ip rule del iif wg0 table 123 priority 456
+[Peer]
+PublicKey = 4q3cegX5t986z1MCPaFZWwoKxfoMLViVnHB0Um8P8zM=
+AllowedIPs = 172.16.0.1/32
+[Peer]
+PublicKey = q56Qp0mG9F4eTwn1DT5hZ4XULG/6DzweseEKql7tvCc=
+AllowedIPs = 0.0.0.0/0
+Endpoint = <next-hop-ip>:443
+PersistentKeepalive = 25
