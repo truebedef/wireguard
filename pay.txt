@@ -1,0 +1,48 @@
+## hope_1.conf                                                                
+[Interface]
+Address = 172.16.0.1/24
+PrivateKey = AFnuFe5rS7sH3MbDkE+YIPTxAwhJYWq9a+cjIxYHVl8=
+ListenPort = 443
+Table = 123
+PreUp = sysctl -w net.ipv4.ip_forward=1
+PreUp = ip rule add iif wg0 table 123 priority 456
+PostDown = ip rule del iif wg0 table 123 priority 456
+[Peer]
+PublicKey = hu25Yj+AgqqYbrZi5j+0HYvK7mSLqOKkWljNiiEDuSE=
+AllowedIPs = 172.16.0.1/32
+[Peer]
+PublicKey = lRoyuxRKNSDGWV4tcvr5CPP0BI3h3cbMbpgNmPr2WjY=
+AllowedIPs = 0.0.0.0/0
+Endpoint = <next-hop-ip>:443
+PersistentKeepalive = 25
+
+##
+[Interface]
+Address = 172.16.0.2/24
+PrivateKey = GCW3ZIil/n3w9fAT6RWY9X8VI6GMrdImNWjFjkfEOF4=
+ListenPort = 443
+Table = 123
+PreUp = sysctl -w net.ipv4.ip_forward=1
+PreUp = ip rule add iif wg0 table 123 priority 456
+PostDown = ip rule del iif wg0 table 123 priority 456
+[Peer]
+PublicKey = dpb4s52psT+L+I8FN7dqqPEYgasoXDQxuDhaKkiYI28=
+AllowedIPs = 172.16.0.1/32
+[Peer]
+PublicKey = hu25Yj+AgqqYbrZi5j+0HYvK7mSLqOKkWljNiiEDuSE=
+AllowedIPs = 0.0.0.0/0
+Endpoint = <next-hop-ip>:443
+PersistentKeepalive = 25
+
+##
+[Interface]
+Address = 172.16.0.3/24
+PrivateKey = UDRmZv8NTAsXrLTpt6jdbjw9F++VTYAzISlr+hr2uFw=
+ListenPort = 443
+PreUp = sysctl -w net.ipv4.ip_forward=1
+PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+[Peer]
+PublicKey = lRoyuxRKNSDGWV4tcvr5CPP0BI3h3cbMbpgNmPr2WjY=
+AllowedIPs = 172.16.0.2/32
+
