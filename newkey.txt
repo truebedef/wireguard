@@ -1,0 +1,128 @@
+[Interface]
+Address = 172.16.0.1/24
+PrivateKey = iI8WVODGly06hzql9ufymrfQuEcDKOHcvrtcTkdPFHo=
+ListenPort = 443
+Table = 123
+PreUp = sysctl -w net.ipv4.ip_forward=1
+PreUp = ip rule add iif wg0 table 123 priority 456
+PostDown = ip rule del iif wg0 table 123 priority 456
+[Peer]
+PublicKey = x4/DQgxo6IpqPOXFK4BTCrqy6pAnG6TCHpt5ujT6nwM=
+AllowedIPs = 172.16.0.1/32
+[Peer]
+PublicKey = 0B2OL+adKPdYDeWwKufWEFpk28YzdztmBs0ieJmM0Fc=
+AllowedIPs = 0.0.0.0/0
+Endpoint = <next-hop-ip>:443
+PersistentKeepalive = 25
+
+
+
+[Interface]
+Address = 172.16.0.3/24
+PrivateKey = 4Hu6nErxbpvfpxTgTUh/pUKGAKrvlUJSWhhbiS5CSUE=
+ListenPort = 443
+PreUp = sysctl -w net.ipv4.ip_forward=1
+PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+[Peer]
+PublicKey = 0B2OL+adKPdYDeWwKufWEFpk28YzdztmBs0ieJmM0Fc=
+AllowedIPs = 172.16.0.2/32
+
+
+
+===============================
+[Interface]
+Address = 172.16.0.1/24
+PrivateKey = cA1IBL5cQtXKIES3WKlCPMgkdgjcIpJrD0IsOVzxFXI=
+ListenPort = 443
+Table = 123
+PreUp = sysctl -w net.ipv4.ip_forward=1
+PreUp = ip rule add iif wg0 table 123 priority 456
+PostDown = ip rule del iif wg0 table 123 priority 456
+[Peer]
+PublicKey = ncvEkCVJAyAmV6RmRvcZ1b8BYmHySgHFG1DUBjNVfBo=
+AllowedIPs = 172.16.0.1/32
+[Peer]
+PublicKey = nSng2IZwF0RRybwaAfKCk10SjLTxjlLVClSuS/W2PVY=
+AllowedIPs = 0.0.0.0/0
+Endpoint = <next-hop-ip>:443
+PersistentKeepalive = 25
+
+
+[Interface]
+Address = 172.16.0.2/24
+PrivateKey = WPqA+exzlknnjgcCpNb7XFFgr20EiMljK2rqsC9zxEA=
+ListenPort = 443
+Table = 123
+PreUp = sysctl -w net.ipv4.ip_forward=1
+PreUp = ip rule add iif wg0 table 123 priority 456
+PostDown = ip rule del iif wg0 table 123 priority 456
+[Peer]
+PublicKey = ITN9z7EeqaA8dmFtxmDV7e50zP+Wp9WXtiMgGtXBhSM=
+AllowedIPs = 172.16.0.1/32
+[Peer]
+PublicKey = ncvEkCVJAyAmV6RmRvcZ1b8BYmHySgHFG1DUBjNVfBo=
+AllowedIPs = 0.0.0.0/0
+Endpoint = <next-hop-ip>:443
+PersistentKeepalive = 25
+
+
+[Interface]
+Address = 172.16.0.3/24
+PrivateKey = WEkppl11UebxjnJh+S6xE5BlMbV/Izsv8jJhmXEALG4=
+ListenPort = 443
+PreUp = sysctl -w net.ipv4.ip_forward=1
+PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+[Peer]
+PublicKey = nSng2IZwF0RRybwaAfKCk10SjLTxjlLVClSuS/W2PVY=
+AllowedIPs = 172.16.0.2/32
+
+================================
+[Interface]
+Address = 172.16.0.1/24
+PrivateKey = QHbzc8djQyUDFK8qehGLwSTfwe7GtXtlQIeZeeRf9Xs=
+ListenPort = 443
+Table = 123
+PreUp = sysctl -w net.ipv4.ip_forward=1
+PreUp = ip rule add iif wg0 table 123 priority 456
+PostDown = ip rule del iif wg0 table 123 priority 456
+[Peer]
+PublicKey = gQCE1+K7/eUMSGsO+8Vycg4cxCFlBgO4NmTU9Q3oRQ0=
+AllowedIPs = 172.16.0.1/32
+[Peer]
+PublicKey = fu1kit/4N/q++jxEzu89MrSj5AWWd1ku6zWDH29Slh4=
+AllowedIPs = 0.0.0.0/0
+Endpoint = <next-hop-ip>:443
+PersistentKeepalive = 25
+
+[Interface]
+Address = 172.16.0.2/24
+PrivateKey = IM9pjkpuQPaloq9uNoWm3OCe+hfEfAFixolF/R9sFV8=
+ListenPort = 443
+Table = 123
+PreUp = sysctl -w net.ipv4.ip_forward=1
+PreUp = ip rule add iif wg0 table 123 priority 456
+PostDown = ip rule del iif wg0 table 123 priority 456
+[Peer]
+PublicKey = SH3tZQ1E2ZqGCERPSgF0tnxrU7B3tgXWcQxwheuiR1Y=
+AllowedIPs = 172.16.0.1/32
+[Peer]
+PublicKey = gQCE1+K7/eUMSGsO+8Vycg4cxCFlBgO4NmTU9Q3oRQ0=
+AllowedIPs = 0.0.0.0/0
+Endpoint = <next-hop-ip>:443
+PersistentKeepalive = 25
+
+[Interface]
+Address = 172.16.0.3/24
+PrivateKey = MCUag9bY6FeF8In/qedA8FG39nzc6Cazn0MjS/88ZkU=
+ListenPort = 443
+PreUp = sysctl -w net.ipv4.ip_forward=1
+PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+[Peer]
+PublicKey = fu1kit/4N/q++jxEzu89MrSj5AWWd1ku6zWDH29Slh4=
+AllowedIPs = 172.16.0.2/32
+
+
+
