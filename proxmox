@@ -1,0 +1,28 @@
+#Edit GRUB
+nano /etc/default/grub
+GRUB_CMDLINE_LINUX_DEFAULT="quiet amd_iommu=on iommu=pt pcie_acs_override=downstream,multifunction nofb nomodeset video=vesafb:off,efifb:off"
+#update-grub
+#edit modules files
+nano /etc/modules
+vfio
+vfio_iommu_type1
+vfio_pci
+vfio_virqfd
+#IOMMU remapping
+#nano /etc/modeprobe.d/iommu_unsafe_interrupts.conf
+options vfio_iommu_type1 allow_unsage_interrupts=1
+#nano /etc/modeprobe.d/kvm.conf
+options kvm ignore_msrs=1
+#blacklist the GPU drivers
+nano /etc/modeprobe.d/blacklist.conf
+blacklist nouveau
+blacklist nvidia
+blacklist nvidiafb
+blacklist radeon
+#add to GPU to VFIO
+lspci -v
+lspci -n -s 1:00 ( below line copy this add next cmd)
+#nano /etc/modeprobe.d/vfio.conf
+options vfio-pci ids=1002:67df,1002:aaf0 disable_vga=1
+update-initramfs -s
+
