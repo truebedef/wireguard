@@ -1,0 +1,6 @@
+#resize partation of proxmox
+sudo growpart /dev/sda 2
+sudo apt update
+sudo apt install cloud-guest-utils
+lsblk sda 2
+hard disk (resize)
