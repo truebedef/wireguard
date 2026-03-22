@@ -1,0 +1,25 @@
+
+face_recognition install setup
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+powershell
+python -m pip install streamlit dlib face_recognition
+
+python -m pip install opencv-python
+
+python -m pip install ultralytics
+python -m pip install ultralytics opencv-python dlib face_recognition streamlit numpy pillow
+
+python -m pip install faiss-cpu
+python -m pip install faiss-cpu ultralytics opencv-python dlib face_recognition streamlit numpy pillow
+
+python -m pip install pymupdf
+
+python -m pip install scikit-learn
+python -m pip install scikit-learn pandas matplotlib
+
+python -m pip install plotly
+python -m pip install plotly pandas
+
+.\run_forensiq.bat
+
